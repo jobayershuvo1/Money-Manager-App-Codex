@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f8f3;
+  color: #17202a;
+}
+
+.dark body {
+  background: #160b2d;
+  color: #faf7ff;
+}
+
+input,
+select,
+textarea {
+  @apply w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-mint focus:ring-2 focus:ring-mint/20;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  @apply text-slate-100 placeholder:text-violet-200/55;
+  background-color: #21113d;
+  border-color: #6d4ca3;
+}
+
+button {
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.btn {
+  @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition;
+}
+
+.btn-primary {
+  @apply btn bg-ink text-white hover:bg-ink/90;
+}
+
+.dark .btn-primary {
+  background-color: #a78bfa;
+  color: #160b2d;
+}
+
+.dark .btn-primary:hover {
+  background-color: #c4b5fd;
+}
+
+.btn-soft {
+  @apply btn border border-stone-300 bg-white text-ink hover:bg-stone-50;
+}
+
+.dark .btn-soft {
+  color: #f5f3ff;
+  background-color: #2a164d;
+  border-color: #6d4ca3;
+}
+
+.dark .btn-soft:hover {
+  background-color: #3b206b;
+}
+
+.panel {
+  @apply rounded-md border border-stone-200 bg-white p-4 shadow-sm;
+}
+
+.dark .panel {
+  @apply shadow-none;
+  background-color: #21113d;
+  border-color: #5b3b8c;
+}
+
+.dark .bg-paper {
+  background-color: #160b2d;
+}
+
+.dark .bg-white,
+.dark .bg-white\/95 {
+  background-color: rgb(33 17 61 / 0.96);
+}
+
+.dark .border-stone-200,
+.dark .border-stone-300 {
+  border-color: #5b3b8c;
+}
+
+.dark .text-ink {
+  color: #faf7ff;
+}
+
+.dark .text-stone-500,
+.dark .text-stone-600 {
+  color: #d8c8ff;
+}
+
+.dark .bg-stone-50 {
+  background-color: #2a164d;
+}
+
+.dark .text-mint {
+  color: #c4b5fd;
+}
+
+.dark .text-coral {
+  color: #f0abfc;
+}
+
+.dark .text-gold {
+  color: #fde68a;
+}
