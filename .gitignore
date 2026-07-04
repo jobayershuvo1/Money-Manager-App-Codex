@@ -8,3 +8,5 @@ postgresql-*-binaries.zip
 dev-server*.log
 next-dev*.log
 tsconfig.tsbuildinfo
+
+.vercel

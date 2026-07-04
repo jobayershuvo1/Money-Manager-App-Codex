@@ -1,0 +1,9 @@
+node_modules
+.next
+.postgres-data
+.postgres-portable
+*.log
+postgresql-*-binaries.zip
+tsconfig.tsbuildinfo
+.env
+.env.local
