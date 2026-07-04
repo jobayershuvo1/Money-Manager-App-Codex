@@ -21,6 +21,7 @@ input,
 select,
 textarea {
   @apply w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-mint focus:ring-2 focus:ring-mint/20;
+  min-width: 0;
 }
 
 .dark input,
@@ -37,6 +38,7 @@ button {
 
 .btn {
   @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition;
+  min-width: 0;
 }
 
 .btn-primary {
@@ -113,4 +115,14 @@ button {
 
 .dark .text-gold {
   color: #fde68a;
+}
+
+@media (max-width: 420px) {
+  .panel {
+    @apply p-3;
+  }
+
+  .btn {
+    @apply px-2;
+  }
 }

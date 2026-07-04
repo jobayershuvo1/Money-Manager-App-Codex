@@ -37,7 +37,7 @@ type Summary = {
 };
 
 function MonthPicker({ month, setMonth }: { month: string; setMonth: (month: string) => void }) {
-  return <input className="max-w-48" type="month" value={month} onChange={(e) => setMonth(e.target.value)} />;
+  return <input className="w-full sm:max-w-48" type="month" value={month} onChange={(e) => setMonth(e.target.value)} />;
 }
 
 function currentLocalDateTime() {
@@ -79,7 +79,7 @@ function Stat({ label, value, tone }: { label: string; value: number; tone?: str
   return (
     <div className="panel min-h-28">
       <p className="text-sm text-stone-500">{label}</p>
-      <p className={`mt-2 text-2xl font-black ${tone || ""}`}>{money(value)}</p>
+      <p className={`mt-2 break-words text-xl font-black sm:text-2xl ${tone || ""}`}>{money(value)}</p>
     </div>
   );
 }
@@ -100,11 +100,11 @@ export function DashboardView() {
   if (!summary) return <AppShell><div className="panel">Loading...</div></AppShell>;
   return (
     <AppShell>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-black">Dashboard</h1>
+      <div className="mb-4 grid gap-3 sm:flex sm:items-center sm:justify-between">
+        <h1 className="text-xl font-black sm:text-2xl">Dashboard</h1>
         <MonthPicker month={month} setMonth={setMonth} />
       </div>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 min-[420px]:grid-cols-2 xl:grid-cols-4">
         <Stat label="Monthly income" value={summary.income} tone="text-mint" />
         <Stat label="Expenses" value={summary.expenses} tone="text-coral" />
         <Stat label="Savings" value={summary.savings} tone="text-gold" />
@@ -139,7 +139,7 @@ function BudgetBox({ month }: { month: string }) {
   return (
     <div className="panel">
       <h2 className="mb-3 font-bold">Monthly budget</h2>
-      <form className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]" onSubmit={save}>
+      <form className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]" onSubmit={save}>
         <select name="categoryId"><option value="">Overall</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
         <input name="amount" type="number" min="1" step="0.01" placeholder="Amount" required />
         <button className="btn-primary"><Plus size={18} />Save</button>
@@ -185,19 +185,19 @@ export function ExpensesView() {
   }
   return (
     <AppShell>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h1 className="text-2xl font-black">Expenses</h1><MonthPicker month={month} setMonth={setMonth} /></div>
+      <div className="mb-4 grid gap-3 sm:flex sm:items-center sm:justify-between"><h1 className="text-xl font-black sm:text-2xl">Expenses</h1><MonthPicker month={month} setMonth={setMonth} /></div>
       <div className="panel mb-4">
-        <form className="grid gap-3 md:grid-cols-5" onSubmit={submit}>
+        <form className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" onSubmit={submit}>
           <input name="amount" type="number" min="1" step="0.01" placeholder="Amount" required />
           <input name="date" type="datetime-local" value={dateTime.value} onChange={(e) => dateTime.onChange(e.target.value)} required />
           <select name="categoryId" required><option value="">Category</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
           <select name="paymentMethod"><option value="CASH">Cash</option><option value="CARD">Card</option><option value="BANK">Bank</option><option value="MOBILE_BANKING">Mobile banking</option><option value="OTHER">Other</option></select>
           <button className="btn-primary"><Plus size={18} />Add</button>
-          <input className="md:col-span-5" name="note" placeholder="Note" />
+          <input className="sm:col-span-2 lg:col-span-5" name="note" placeholder="Note" />
         </form>
         {success && <SuccessMessage text={success} />}
       </div>
-      <div className="panel mb-4 grid gap-3 md:grid-cols-4">
+      <div className="panel mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <select value={filters.categoryId} onChange={(e) => setFilters({ ...filters, categoryId: e.target.value })}><option value="">All categories</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
         <select value={filters.paymentMethod} onChange={(e) => setFilters({ ...filters, paymentMethod: e.target.value })}><option value="">All payments</option><option value="CASH">Cash</option><option value="CARD">Card</option><option value="BANK">Bank</option><option value="MOBILE_BANKING">Mobile banking</option><option value="OTHER">Other</option></select>
         <input type="date" value={filters.start} onChange={(e) => setFilters({ ...filters, start: e.target.value })} />
@@ -232,9 +232,9 @@ export function IncomesView() {
   }
   return (
     <AppShell>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h1 className="text-2xl font-black">Income</h1><MonthPicker month={month} setMonth={setMonth} /></div>
+      <div className="mb-4 grid gap-3 sm:flex sm:items-center sm:justify-between"><h1 className="text-xl font-black sm:text-2xl">Income</h1><MonthPicker month={month} setMonth={setMonth} /></div>
       <div className="panel mb-4">
-        <form className="grid gap-3 md:grid-cols-5" onSubmit={submit}>
+        <form className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" onSubmit={submit}>
           <input name="amount" type="number" min="1" step="0.01" placeholder="Amount" required />
           <input name="date" type="datetime-local" value={dateTime.value} onChange={(e) => dateTime.onChange(e.target.value)} required />
           <input name="source" placeholder="Source" required />
@@ -264,9 +264,9 @@ export function CategoriesView() {
   }
   return (
     <AppShell>
-      <h1 className="mb-4 text-2xl font-black">Categories</h1>
+      <h1 className="mb-4 text-xl font-black sm:text-2xl">Categories</h1>
       <div className="panel mb-4">
-        <form className="grid gap-3 sm:grid-cols-[1fr_100px_auto]" onSubmit={submit}>
+        <form className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_100px_auto]" onSubmit={submit}>
           <input name="name" placeholder="Custom category" required />
           <input name="color" type="color" defaultValue="#2EA871" title="Color" />
           <button className="btn-primary"><Plus size={18} />Add</button>
@@ -291,8 +291,8 @@ export function ReportsView() {
   if (!summary) return <AppShell><div className="panel">Loading...</div></AppShell>;
   return (
     <AppShell>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h1 className="text-2xl font-black">Monthly report</h1><MonthPicker month={month} setMonth={setMonth} /></div>
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="mb-4 grid gap-3 sm:flex sm:items-center sm:justify-between"><h1 className="text-xl font-black sm:text-2xl">Monthly report</h1><MonthPicker month={month} setMonth={setMonth} /></div>
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         <div className="panel"><h2 className="mb-3 font-bold">Income vs expense</h2><IncomeExpenseChart data={summary.incomeVsExpense || []} /></div>
         <div className="panel"><h2 className="mb-3 font-bold">Category breakdown</h2><CategoryPie data={summary.byCategory} /></div>
         <div className="panel"><h2 className="mb-3 font-bold">Daily spending trend</h2><DailyTrend data={summary.dailyTrend} /></div>
@@ -388,7 +388,7 @@ export function AiView() {
   }
   return (
     <AppShell>
-      <h1 className="mb-4 text-2xl font-black">AI assistant</h1>
+      <h1 className="mb-4 text-xl font-black sm:text-2xl">AI assistant</h1>
       <div className="grid gap-4 lg:grid-cols-[1fr_380px]">
         <div className="panel">
           <textarea rows={6} value={text} onChange={(e) => { setText(e.target.value); setPreview(null); setCorrection(""); setResult(""); }} placeholder={expenseExample} />
@@ -404,7 +404,7 @@ export function AiView() {
           {correction && <p className="mt-3 rounded-md bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-800 dark:bg-violet-300/15 dark:text-violet-100">{correction}</p>}
           {preview && (
             <div className="mt-4 rounded-md border border-violet-200 bg-violet-50 p-4 text-sm text-violet-950 dark:border-violet-700 dark:bg-purple-950 dark:text-violet-50">
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 [&_p]:break-words">
                 <p><strong>Type:</strong> {preview.parsed.transactionType}</p>
                 <p><strong>Amount:</strong> {money(preview.parsed.amount)}</p>
                 <p><strong>Date:</strong> {preview.parsed.date}</p>
@@ -418,7 +418,7 @@ export function AiView() {
               </div>
             </div>
           )}
-          {result && <p className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{result}</p>}
+          {result && <p className="mt-3 break-words rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{result}</p>}
         </div>
         <div className="panel">
           <h2 className="mb-3 font-bold">Suggestions</h2>
@@ -445,12 +445,12 @@ function Rows({ items, onRemove }: { items: { id: string; left: string; right: s
   return (
     <div className="space-y-2">
       {items.map((item) => (
-        <div className="panel flex items-center justify-between gap-3" key={item.id}>
+        <div className="panel grid gap-3 sm:flex sm:items-center sm:justify-between" key={item.id}>
           <div className="min-w-0">
             <p className="truncate font-semibold">{item.left}</p>
             <p className="truncate text-sm text-stone-500">{item.sub}</p>
           </div>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center justify-between gap-2 sm:justify-end">
             <strong>{item.right}</strong>
             <button className="btn-soft h-10 w-10 px-0" onClick={() => onRemove(item.id)} title="Delete"><Trash2 size={16} /></button>
           </div>
