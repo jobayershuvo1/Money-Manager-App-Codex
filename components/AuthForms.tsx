@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { LogIn, Mail, UserPlus } from "lucide-react";
+import { LogIn, Mail, UserPlus, Eye, EyeOff } from "lucide-react";
 import { api } from "@/components/api";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -15,6 +15,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
@@ -60,7 +61,25 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <form className="space-y-3" onSubmit={submit}>
           {mode === "signup" && <input name="name" placeholder="Full name" required minLength={2} />}
           {(mode === "login" || mode === "signup" || mode === "forgot") && <input name="email" type="email" placeholder="Email" required />}
-          {(mode === "login" || mode === "signup" || mode === "reset") && <input name="password" type="password" placeholder="Password" required minLength={8} />}
+          {(mode === "login" || mode === "signup" || mode === "reset") && (
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full pr-10"
+                required
+                minLength={8}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-500 hover:text-stone-700 dark:text-violet-200/55 dark:hover:text-slate-100"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          )}
           {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
           {message && <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{message}</p>}
           <button
